@@ -25,13 +25,13 @@ def obj_data(img):
 def Distance_finder(Focal_Length, Known_width, obj_width_in_frame):
     distance = (Known_width * Focal_Length)/obj_width_in_frame
     return distance
-ref_image = cv2.imread("rf.png")
+ref_image = cv2.imread("/tmp/rf.png")
 ref_image_obj_width = obj_data(ref_image)
 Focal_length_found = Focal_Length_Finder(Known_distance, Known_width, ref_image_obj_width)
 cv2.imshow("ref_image", ref_image)
 
 print(Focal_length_found)
-        
+
 
 while True:
     ret,frame=cap.read()
@@ -39,19 +39,19 @@ while True:
     obj_width_in_frame=obj_data(frame)
     if not obj_width_in_frame:
         print("no hands")
-    else:    
+    else:
         Distance = Distance_finder(Focal_length_found, Known_width, obj_width_in_frame)
         for i in a:
             x1=i[0]
             y1=i[1]
-          
+
         cv2.putText(frame, f"Distance: {round(Distance,2)} CM", (x1, y1),cv2.FONT_HERSHEY_PLAIN, 2, (255,0,0), 2)
-       
-   
-        
+
+
+
     frame=cv2.imshow("FRAME",frame)
-   
+
     if cv2.waitKey(1)&0xFF==27:
         break
-cap.relase()
+cap.release()
 cv2.destroyAllWindows()
